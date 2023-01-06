@@ -1,10 +1,8 @@
-
-
-
 package ru.kata.kata312.dao;
 
 import org.springframework.stereotype.Repository;
 import ru.kata.kata312.model.User;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -30,7 +28,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserById(int id) {
-
         return entityManager.find(User.class, id);
     }
 
@@ -41,7 +38,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void delete(int id) {
-        entityManager.remove(entityManager.find(User.class, id));
+        User user = getUserById(id);
+        if (user != null) {
+            entityManager.remove(user);
+        }
     }
 }
-
